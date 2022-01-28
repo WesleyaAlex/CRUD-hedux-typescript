@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from "react"
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import { Contact } from './store/interfaces/Contact'
+import { ContactsForm } from './pages/Form'
+import { ContactsList } from './pages/List'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import { UseContactsLogic } from "./store/actions/UseContactsLogic"
 
-function App() {
+const App: FC = () => {
+  const { addContact, contact, contactList, removeContact } = UseContactsLogic()
+
+  const handleFormSubmit = (contato: Contact) => {
+    addContact(contato)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register-contacts" element={<ContactsForm contact={contact} submitForm={handleFormSubmit} />}>
+            <Route path=":index" element={<ContactsForm contact={contact} submitForm={handleFormSubmit} />} />
+          </Route>
+          <Route path="/consult-contacts" element={<ContactsList list={contactList} onDelete={removeContact} />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
 }
 
 export default App;
