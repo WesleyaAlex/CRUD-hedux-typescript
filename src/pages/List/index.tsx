@@ -1,6 +1,6 @@
 import React from "react"
 import { Grid, ListItem, List, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, IconButton} from '@material-ui/core'
-import { AccountCircle, Delete, Feedback, Edit } from '@material-ui/icons'
+import { AccountCircle, Delete, Feedback } from '@material-ui/icons'
 import { Contact } from '../../store/interfaces/Contact'
 import './index.css'
 
@@ -26,9 +26,6 @@ export const ContactsList: React.FC<ContactsListProps> = ({ list, onDelete } : C
                                 <ListItemText primary={contact.name} secondary={`Idade: ${contact.age}`} />
 
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="start" onClick={() => onDelete(contact)}>
-                                        <Edit />
-                                    </IconButton>
                                     <IconButton edge="end" onClick={() => onDelete(contact)}>
                                         <Delete />
                                     </IconButton>
